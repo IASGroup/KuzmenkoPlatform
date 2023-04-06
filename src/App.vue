@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <router-view/>
+      <router-view />
     </v-main>
   </v-app>
 </template>
@@ -19,6 +19,6 @@ html {
   font-family: "Inter";
   font-style: normal;
   font-display: auto;
-  src: local("Roboto"), url("public/fonts/inter/Inter-VariableFont_slnt,wght.ttf") format("truetype");
+  src: local("Inter"), url("public/fonts/inter/Inter-VariableFont_slnt,wght.ttf") format("truetype");
 }
 </style>

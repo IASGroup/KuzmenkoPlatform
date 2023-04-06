@@ -1,10 +1,9 @@
 <script setup lang="ts">
 
-const courses = [
-  "19-IAS"
-];
+import {onMounted, ref} from "vue";
+import sleep from 'sleep-promise';
 
-const fios = [
+const fios: Array<string> = [
   "Babayev",
   "Bondarenko",
   "Vasiliev",
@@ -22,6 +21,16 @@ const fios = [
   "Tolkachev",
   "Telepnev",
 ];
+
+const showedFios = ref<Array<string>>([]);
+
+onMounted(async () => {
+  for (const fio of fios) {
+    await sleep(55);
+    showedFios.value.push(fio);
+  }
+});
+
 </script>
 
 <template>
@@ -29,16 +38,19 @@ const fios = [
     <div class="home__content">
       <div class="about">
         <span class="about__course">Formalized models and methods</span>
-        <span class="about__course">for solving analytical problems</span>
+        <span class="about__course">For solving analytical problems</span>
       </div>
-      <div class="courses" v-for="(course, i) in courses" :key="i">
-        <span class="courses__name">{{ course }}</span>
-        <div class="pages">
-          <router-link class="page__link" v-for="(fio, i) in fios" :key="i"
-                       :to="fio.toLowerCase()">
+      <div class="pages">
+        <TransitionGroup name="pages__list">
+          <router-link
+              class="page__link"
+              v-for="(fio, i) in showedFios"
+              :key="i"
+              :to="fio.toLowerCase()"
+          >
             {{ fio }}
           </router-link>
-        </div>
+        </TransitionGroup>
       </div>
     </div>
   </div>
@@ -53,13 +65,24 @@ const fios = [
   background-color: #202124;
   min-height: 100vh;
   color: white;
-  padding-top: 50px;
+  font-family: Inter, serif;
 }
 
 .home__content {
-  background-color: #2d2e33;
-  padding: 150px 30px 150px 30px;
-  border-radius: 50px;
+  display: grid;
+  grid-row-gap: 120px;
+  padding: 120px 0 120px 0;
+}
+
+.pages__list-enter-active,
+.pages__list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.pages__list-enter-from,
+.pages__list-leave-to {
+  opacity: 0;
+  transform: translateY(50px);
 }
 
 .about {
@@ -67,24 +90,13 @@ const fios = [
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
-  width: 50vw;
-  margin-bottom: 100px;
 }
 
 .about__course {
-  font-size: 3.5rem;
-  line-height: 3.5rem;
-}
-
-.courses {
-  display: grid;
-  grid-row-gap: 5px;
-  width: 50vw;
-}
-
-.courses__name {
-  font-size: 1.7rem;
-  max-width: fit-content !important;
+  font-size: 4.5rem;
+  line-height: 4.5rem;
+  letter-spacing: 0.1rem;
+  font-weight: bolder;
 }
 
 .pages {
@@ -92,12 +104,18 @@ const fios = [
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-auto-rows: max-content;
   grid-column-gap: 25px;
-  grid-row-gap: 20px;
+  grid-row-gap: 25px;
 }
 
 .page__link {
+  text-align: center;
   text-decoration: none;
   color: white;
-  font-size: 1.6rem;
+  font-size: 1.7rem;
+  font-weight: normal;
+}
+
+.page__link:hover {
+
 }
 </style>
