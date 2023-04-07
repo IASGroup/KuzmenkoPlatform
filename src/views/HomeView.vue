@@ -2,6 +2,9 @@
 
 import {onMounted, ref} from "vue";
 import sleep from 'sleep-promise';
+import { useLocalStorage } from "@vueuse/core"
+
+const animationShowed = useLocalStorage("animationShowed", false);
 
 const fios: Array<string> = [
   "Babayev",
@@ -22,14 +25,33 @@ const fios: Array<string> = [
   "Telepnev",
 ];
 
-const showedFios = ref<Array<string>>([]);
+const showedFios = ref<Array<string>>(animationShowed.value ? fios: []);
+
+const aboutTextHeaders = [
+    "Formalized models and methods",
+    "For solving analytical problems"
+]
+
+const showedAboutTextHeaders = ref<Array<string>>(animationShowed.value ? aboutTextHeaders : []);
 
 onMounted(async () => {
+  if (!animationShowed.value) {
+    await showAnimation();
+  }
+});
+
+async function showAnimation () {
+  for (const about of aboutTextHeaders) {
+    await sleep(750);
+    showedAboutTextHeaders.value.push(about);
+  }
+  await sleep(600);
   for (const fio of fios) {
     await sleep(55);
     showedFios.value.push(fio);
   }
-});
+  animationShowed.value = true;
+}
 
 </script>
 
@@ -37,8 +59,14 @@ onMounted(async () => {
   <div class="home__view">
     <div class="home__content">
       <div class="about">
-        <span class="about__course">Formalized models and methods</span>
-        <span class="about__course">For solving analytical problems</span>
+        <transition-group name="about__list">
+          <span class="about__course"
+                v-for="(about, i) in showedAboutTextHeaders"
+                :key="i"
+          >
+          {{about}}
+        </span>
+        </transition-group>
       </div>
       <div class="pages">
         <TransitionGroup name="pages__list">
@@ -83,6 +111,18 @@ onMounted(async () => {
 .pages__list-leave-to {
   opacity: 0;
   transform: translateY(50px);
+}
+
+
+.about__list-enter-active,
+.about__list-leave-active {
+  transition: all 0.9s ease;
+}
+
+.about__list-enter-from,
+.about__list-leave-to {
+  opacity: 0;
+  transform: translateY(-50px);
 }
 
 .about {
