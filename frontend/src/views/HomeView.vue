@@ -4,8 +4,7 @@ import {onMounted, ref} from "vue";
 import sleep from 'sleep-promise';
 import { useLocalStorage } from "@vueuse/core"
 
-const animationShowed = useLocalStorage("animationShowed", false);
-
+const lastShowDate = useLocalStorage("lastShowDate", new Date());
 const fios: Array<string> = [
   "Babayev",
   "Bondarenko",
@@ -25,22 +24,20 @@ const fios: Array<string> = [
   "Telepnev",
 ];
 
-const showedFios = ref<Array<string>>(animationShowed.value ? fios: []);
+const showedFios = ref<Array<string>>([]);
 
 const aboutTextHeaders = [
     "Formalized models and methods",
     "For solving analytical problems"
 ]
 
-const showedAboutTextHeaders = ref<Array<string>>(animationShowed.value ? aboutTextHeaders : []);
+const showedAboutTextHeaders = ref<Array<string>>([]);
 
 onMounted(async () => {
-  if (!animationShowed.value) {
-    await showAnimation();
-  }
+  await homeAnimation();
 });
 
-async function showAnimation () {
+async function homeAnimation () {
   for (const about of aboutTextHeaders) {
     await sleep(750);
     showedAboutTextHeaders.value.push(about);
@@ -50,7 +47,6 @@ async function showAnimation () {
     await sleep(55);
     showedFios.value.push(fio);
   }
-  animationShowed.value = true;
 }
 
 </script>
@@ -134,8 +130,8 @@ async function showAnimation () {
 
 .about__course {
   font-size: 4.5rem;
-  line-height: 4.5rem;
-  letter-spacing: 0.1rem;
+  line-height: 5rem;
+  letter-spacing: 0.2rem;
   font-weight: bolder;
 }
 
@@ -143,7 +139,7 @@ async function showAnimation () {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-auto-rows: max-content;
-  grid-column-gap: 25px;
+  grid-column-gap: 0px;
   grid-row-gap: 25px;
 }
 
@@ -153,9 +149,5 @@ async function showAnimation () {
   color: white;
   font-size: 1.7rem;
   font-weight: normal;
-}
-
-.page__link:hover {
-
 }
 </style>
