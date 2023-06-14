@@ -13,6 +13,8 @@
     "@vueuse/core": "^9.13.0",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
+    "epic-spinners": "^2.0.0",
+    "vue-json-pretty": "^2.2.3",
     "roboto-fontface": "*",
     "sleep-promise": "^9.1.0",
     "vue": "^3.2.13",

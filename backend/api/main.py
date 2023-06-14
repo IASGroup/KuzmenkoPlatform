@@ -1,8 +1,12 @@
 import pandas as pd
 import uvicorn
 from typing import Union
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
+
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.inmemory import InMemoryBackend
+from .utils.bondarenko.utils import init_app as bondarenko_init_app
 
 app = FastAPI()
 
@@ -18,10 +22,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def getdata():
-    data = pd.read_csv('../api/data/bondarenko/somedata.csv')
-    return data.to_json()
+bondarenko_init_app(app)
+
+@app.on_event("startup")
+async def startup():
+    FastAPICache.init(InMemoryBackend(), prefix="fastapi-cache")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)
