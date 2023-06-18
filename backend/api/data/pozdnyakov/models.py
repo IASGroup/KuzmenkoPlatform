@@ -83,8 +83,8 @@ def plot_clustering_3d() -> str:
     return json.dumps(json_data)
 
 
-def plot_clustering_count_bigrams() -> str:
-    path = f'{PATH}/json/files/plot_clustering_count_bigrams.json'
+def plot_clustering_count_n_grams_in_article() -> str:
+    path = f'{PATH}/json/files/plot_clustering_count_n_grams_in_article.json'
     with open(path, "r") as file:
         json_data = json.load(file)
 
