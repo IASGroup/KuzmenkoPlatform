@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from ...data.pozdnyakov.models import plot_clustering_2d, plot_clustering_count_bigrams, \
+from ...data.savenkov.models import plot_clustering_2d, plot_clustering_count_n_grams_in_category, \
     plot_clustering_pca, plot_clustering_tsne, plot_clustering_3d
 
 router = APIRouter(
@@ -29,6 +29,6 @@ async def get_clustering_tsne():
     return plot_clustering_tsne()
 
 
-@router.get('/clustering_count_bigrams', summary='Кластеризация по количеству биграмм и триграмм в категории')
-async def get_clustering_count_bigrams():
-    return plot_clustering_count_bigrams()
+@router.get('/clustering_count_n_grams_in_category', summary='Кластеризация по количеству биграмм и триграмм в категории')
+async def get_clustering_count_n_grams_in_category():
+    return plot_clustering_count_n_grams_in_category()

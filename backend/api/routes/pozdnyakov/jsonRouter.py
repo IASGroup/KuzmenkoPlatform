@@ -1,9 +1,9 @@
 from fastapi import APIRouter
-from ...data.pozdnyakov.models import plot_clustering_2d, plot_clustering_count_bigrams, \
+from ...data.pozdnyakov.models import plot_clustering_2d, plot_clustering_count_n_grams_in_article, \
     plot_clustering_pca, plot_clustering_tsne, plot_clustering_3d
 
 router = APIRouter(
-    prefix="/pozndyakov/json",
+    prefix="/pozdnyakov/json",
     tags=["json"],
     responses={404: {"description": "Not found"}},
 )
@@ -29,6 +29,6 @@ async def get_clustering_tsne():
     return plot_clustering_tsne()
 
 
-@router.get('/clustering_count_bigrams', summary='Кластеризация по количеству биграмм и триграмм в статье')
-async def get_clustering_count_bigrams():
-    return plot_clustering_count_bigrams()
+@router.get('/clustering_count_n_grams_in_article', summary='Кластеризация по количеству биграмм и триграмм в статье')
+async def get_clustering_count_n_grams_in_article():
+    return plot_clustering_count_n_grams_in_article()
