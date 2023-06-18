@@ -7,6 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.inmemory import InMemoryBackend
 from .utils.bondarenko.utils import init_app as bondarenko_init_app
+from .utils.pozdnyakov.utils import init_app as pozdnyakov_init_app
+from .utils.savenkov.utils import init_app as savenkov_init_app
+
 
 app = FastAPI()
 
@@ -23,6 +26,8 @@ app.add_middleware(
 )
 
 bondarenko_init_app(app)
+pozdnyakov_init_app(app)
+savenkov_init_app(app)
 
 @app.on_event("startup")
 async def startup():
