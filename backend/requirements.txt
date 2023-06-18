@@ -9,3 +9,4 @@ stem==1.8.1
 typing==3.7.4.3
 fastapi-cache2==0.2.1
 websockets==11.0.3
+beautifulsoup4==4.12.2
