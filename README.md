@@ -6,6 +6,8 @@
 
 запуск апи: в папке /backend ```uvicorn api.main:app --reload```
 
+swagger: ```http://localhost:8000/docs```
+
 ## frontend
 
 установить [node.js](https://nodejs.org/en)
